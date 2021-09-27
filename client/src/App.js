@@ -12,7 +12,7 @@ function App() {
 
   
   const [employeeList, setemployeeList] = useState([]);
-  const [newWage, setNewWage] = useState ([]);
+  const [newWage, setNewWage] = useState (0);
 
   const addEmployee = () => {
     Axios.post('http://localhost:3001/create', {
@@ -33,10 +33,22 @@ function App() {
   };
 
   const updateEmployees = (id) => {
-    Axios.put('http://localhost:3001/update', {wage : newWage , id : id}).then((response) => {
-      alert("update");
-    });
+    Axios.put('http://localhost:3001/update', {wage : newWage , id : id}).then(
+      (response) => {
+        setemployeeList(employeeList.map((val) => {
+          return val.id == id ? {
+            id : val.id,
+            name: val.name,
+            country: val.country,
+            age:val.age,
+            position: val.position,
+            wage: newWage,
+          } : val;
+        }))
+      }
+    );
   };
+    
 
   return (
   <div className="App">
@@ -92,10 +104,14 @@ function App() {
               <h3>Wage : {val.wage}</h3> 
             </div>
               <div> 
-                <input type ="text" placeholder="2000..." onChange={(event) => {
+                <input 
+                type ="text" 
+                placeholder="2000..." 
+                onChange={(event) => {
                   setNewWage(event.target.value);
-                }} /> 
-                <button onClick= {() => {updateEmployees(val.id)}}> Update </button>
+                }} 
+              /> 
+                <button onClick= {() => {updateEmployees(val.id);}}> Update </button>
               </div>
         </div>
       );
