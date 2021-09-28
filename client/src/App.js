@@ -48,6 +48,16 @@ function App() {
       }
     );
   };
+
+  const deleteEmployees = (id) => {
+    Axios.delete(`http://localhost:3001/delete/${id}`).then((response)=> {
+      setemployeeList(employeeList.filter((val)=>{
+        return val.id != id
+      })
+      );
+    });
+  };
+  
     
 
   return (
@@ -112,6 +122,7 @@ function App() {
                 }} 
               /> 
                 <button onClick= {() => {updateEmployees(val.id);}}> Update </button>
+                <button onClick= {() => {deleteEmployees(val.id)}}> Delete </button>
               </div>
         </div>
       );

@@ -40,16 +40,16 @@ app.get('/employees',(req,res) => {
     });
 });
 
-// app.delete('/delete', (req,res) => {
-//     const employee = req.body
-//     db.query("DELETE FROM employees WHERE name = ?", (err, result) =>{
-//     if (err){
-//         console.log(err);
-//     } else {
-//         res.send("Values deleted");
-//     }
-//     });
-// })
+app.delete('/delete/:id', (req,res) => {
+    const id = req.params.id
+    db.query("DELETE FROM employees WHERE id = ?", id, (err, result) =>{
+    if (err){
+        console.log(err);
+    } else {
+        res.send(result);
+    }
+    });
+})
 
 app.put('/update', (req,res) => {
     const id = req.body.id;
